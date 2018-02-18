@@ -9,20 +9,16 @@
 
 package andrew.xie.algorithm.sort;
 
-public class Merge {
+public class MergeBU {
     public static void sort(Comparable[] a) {
+        int n = a.length;
         Integer[] aux = new Integer[a.length];
 
-        sort(a, aux,0, a.length - 1);
-    }
-
-    private static void sort(Comparable[]a, Comparable[] aux, int low, int high) {
-        if(low >= high) return;
-        int mid = low + (high - low) /2;
-        // Sort left, right
-        sort(a, aux, low, mid);
-        sort(a, aux, mid+1, high);
-        merge(a, aux, low, mid, high);
+        for (int i = 1; i < n; i*=2) {
+            for (int j = 0; j + i < n; j+=2*i) {
+                merge(a, aux, j, j+i-1,Math.min(j+i+i-1, n-1));
+            }
+        }
     }
 
     private static void merge(Comparable[]a, Comparable[] aux, int low, int mid, int high) {
@@ -65,7 +61,7 @@ public class Merge {
         Integer[] aux2 = new Integer[8];
         merge(arr2, aux2, 0, 3, 7);
         printArray(arr2);
-        Integer[] arr = {5, 4, 3, 2, 1, 7, 9, 8, 10, 12, 25, 17, 19};
+        Integer[] arr = {5, 4, 3, 2, 1, 7, 9, 8, 10};
         sort(arr);
         printArray(arr);
     }
